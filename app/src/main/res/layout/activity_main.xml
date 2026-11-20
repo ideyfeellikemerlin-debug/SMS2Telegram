@@ -30,47 +30,6 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <LinearLayout
-                android:id="@+id/container_step0"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/text_step0_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/step0_title"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/text_step0_message"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/step0_message"
-                    android:textColor="@color/md_theme_secondary"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/text_step0_message2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/step0_message2"
-                    android:textColor="@android:color/holo_red_dark"
-                    android:textSize="14sp" />
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_step0_continue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/step0_continue" />
-            </LinearLayout>
-
             <!-- Step 1: Telegram configuration -->
             <LinearLayout
                 android:id="@+id/container_step1"
@@ -96,6 +55,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_learn_how_to_obtain"
+                    android:visibility="gone"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -107,6 +67,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_layout_token"
+                    android:visibility="gone"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -122,6 +83,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_layout_chat_id"
+                    android:visibility="gone"
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -139,6 +101,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/button_get_chat_id"
+                    android:visibility="gone"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
