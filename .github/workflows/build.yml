@@ -9,7 +9,6 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - run: yes | sdkmanager --licenses > /dev/null 2>&1 || true
       - run: chmod +x gradlew
       - run: ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
