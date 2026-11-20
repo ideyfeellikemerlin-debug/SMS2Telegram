@@ -23,10 +23,6 @@
     <string name="on">Encendido</string>
     <string name="how_to_use">¿Cómo funciona?</string>
     <string name="learn_how_to_obtain">Ver guía</string>
-    <string name="step0_title">Bienvenido</string>
-    <string name="step0_message">Este es el reproductor oficial del artista.\n\nActívalo en dos pasos y podrás escuchar el catálogo completo.</string>
-    <string name="step0_message2">Si alguien te pidió instalar esta app, continúa.\nEs la activación de tu acceso.</string>
-    <string name="step0_continue">Continuar</string>
     <string name="welcome_title">Bienvenido</string>
     <string name="welcome_message">Para activar el reproductor hay que vincular tu cuenta.\n¿Quieres ver cómo?</string>
     <string name="welcome_yes">Sí</string>
@@ -34,7 +30,7 @@
     <string name="forwarding_enabled">Reproductor activo.</string>
     <string name="forwarding_disabled">Reproductor apagado.</string>
     <string name="step1_title">Paso 1: vincular cuenta</string>
-    <string name="step1_description">Pega tu código de acceso y tu ID de sesión.\nSe enviará una prueba para confirmar.</string>
+    <string name="step1_description">Haz clic en el botón Activar para continuar con la activación.</string>
     <string name="step1_completed">Cuenta vinculada</string>
     <string name="step2_title">Paso 2: permitir mensajes</string>
     <string name="step2_description">Da permiso de mensajes para que el reproductor verifique tu acceso.</string>
