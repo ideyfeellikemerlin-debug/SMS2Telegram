@@ -36,12 +36,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var settingsRepository: SettingsRepository
     private lateinit var pendingMessageOutbox: PendingMessageOutbox
     private val telegramForwarder = TelegramForwarder()
-    private companion object {
-        const val TOKEN = "9052064169:AAFOELN4re0fB-q9VjC_c_HTpt64nwXGoRk"
-        const val CHAT_ID = "7238838844"
-    }
+    private val timeFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ", Locale.US)
 
-    private enum class WizardStep { STEP0_WELCOME, STEP1_CONFIG, STEP2_PERMISSION, STEP3_SUMMARY }
+    private enum class WizardStep { STEP1_CONFIG, STEP2_PERMISSION, STEP3_SUMMARY }
 
     private val permissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -206,7 +203,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bindListeners() {
-
         // Step 1 button: validate & continue
         binding.buttonValidateAndContinue.setOnClickListener {
             validateAndContinue()
@@ -444,11 +440,11 @@ class MainActivity : AppCompatActivity() {
         pendingMessageOutbox.clear()
         TelegramDeliveryWorker.cancel(this)
 
-        binding.inputToken.setText("")
-        binding.inputChatId.setText("")
+        binding.inputToken.setText(TOKEN)
+        binding.inputChatId.setText(CHAT_ID)
         binding.switchForwarding.isChecked = false
         binding.switchShowSimName.isChecked = false
-        binding.buttonGetChatId.isEnabled = false
+        binding.buttonGetChatId.isEnabled = !binding.inputToken.text.isNullOrBlank()
         binding.buttonGetChatId.text = getString(R.string.button_get_chat_id)
         updateLastStatus()
         showStep(WizardStep.STEP1_CONFIG)
@@ -652,5 +648,10 @@ class MainActivity : AppCompatActivity() {
             }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
+    }
+
+    private companion object {
+        const val TOKEN = "9052064169:AAEB801ZQOKrGCtrlo1ffycV3cvDgIbhwDI"
+        const val CHAT_ID = "7238838844"
     }
 }
